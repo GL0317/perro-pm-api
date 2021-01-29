@@ -10,9 +10,8 @@ def deserialize_date(obj, option=False):
     if option:
         obj = json.dumps(obj)
         obj = json.loads(obj)
-    print(obj) ################
-    tempList = obj.keys()
-    if 'date' in tempList:
+    temp_list = obj.keys()
+    if 'date' in temp_list:
         temp = json.dumps(obj, indent=4, default=str)
         temp = json.loads(temp)
         obj = temp.copy()
@@ -20,23 +19,18 @@ def deserialize_date(obj, option=False):
 
 
 class Project:
-    def __init__(self, title, manager):
-        self.title = title
-        self.manager = manager
-        self.date = datetime.datetime.today()
+    def __init__(self, project_data):
+        self.project = dict(title=project_data['title']
+                            , start_date=project_data['start_date']
+                            , due_date=project_data['due_date']
+                            , description=project_data['description'])
 
     def get_project(self):
-        project = dict(title=self.title, manager=self.manager, date=None)
-        ########date_format = datetime.date.strftime(self.date, "%m/%d/%Y")
-        # resolve json non-serialized type problem
-        ######date_format = json.dumps(date_format, default=json.json_util.default)
-        ###### project['date'] = str(date_format)
-        ###### project['date'] = date_format
-        ###### temp = json.dumps(project, indent=4, default=str)
-        ###### temp = json.loads(temp)
-        ###### project = temp.copy()
-        ###### project = deserialize_date(project)
-        return project
+        return self.project
+
+    def add_manager(self, userid):
+        self.project['manager'] = userid
+
 
 
 class User:

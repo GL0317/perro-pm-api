@@ -12,7 +12,7 @@ requestMethods = routes.RequestMethods()
 def index():
     return render_template('index.html')
 
-
+# this route is restricted to authorized users
 @app.route('/projects', methods=['GET', 'POST'])
 def get_and_post_projects():
     return requestMethods.get_and_post(data.PROJECTS)
@@ -26,6 +26,10 @@ def get_and_post_users():
 @app.route('/projects/<projectid>/tasks', methods=['GET', 'POST'])
 def get_and_post_tasks(projectid):
     return requestMethods.get_and_post(data.TASKS, projectid)
+
+@app.route('/users/<userid>/projects', methods=['GET', 'POST'])
+def get_and_post_user_projects(userid):
+    return requestMethods.get_and_post(data.USERS, userid, True)
 
 
 
